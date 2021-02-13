@@ -19,7 +19,7 @@ const App = () => {
          <div className="stateBtn" onClick={()=>setGenerovaneHodnoty(generator(pocetSloupcu))}>vygeneruj</div>
       </div>:<></>}
       {
-      generovaneHodnoty.map((arr:any, index:number)=> <div className="radek" key={index}>{index+1}. sloupec: {arr}</div>)
+      generovaneHodnoty.map((arr:any, index:number)=> <div className="radek" key={index}><span className="sloupec">{index+1}. sloupec:</span> <span className="numbs">{arr}</span></div>)
       }
     </>
   )
@@ -30,20 +30,22 @@ export default App
 const generator = (sloupce:number):number[] => {
   const arr:any = [];
   for (let i = 0; i < sloupce; i++) {
-    let temp:any[] = [];
-      for (let x = 0; x < 6; x++) {
-        //zde to vygeneruje 
+    
+       let temp:any[] = [];
+       //@ts-ignore
+       temp = [...new Set(temp)];
+       do{
+        //@ts-ignore
+        temp = [...new Set(temp)];
         let num = Math.floor(Math.random()*50);
         num < 1 ?num++:console.log("dobrý");
-        if(x === 5){
-          temp.push(num)
-        }else{
-          temp.push(num + ", ")
-        }
+        temp.sort()
+        temp.push(num);
       }
-      
-      //@ts-ignore
-      arr.push(temp);
+    while(temp.length<6)
+   
+          arr.push(temp.toString());   
   }
+ 
   return arr;
 }
